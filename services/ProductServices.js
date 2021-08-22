@@ -4,6 +4,6 @@ exports.addNewProductService = async function (data) {
   return await ProductModel.create(data)
 }
 
-exports.getAllProductService = async function () {
-  return await ProductModel.find()
+exports.getAllProductService = async function (id) {
+  return await ProductModel.find(id)
 }

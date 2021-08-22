@@ -9,17 +9,21 @@ const addProducts = async (req, res) => {
     res.json(products)
   } catch (error) {
     console.log(error)
-
   }
 }
 const getProducts = async (req, res) => {
+  let products
   try {
-    const products = await getAllProductService()
+    if (Object.keys(req.query).length !== 0) {
+      products = await getAllProductService({ ...req.query })
+    } else {
+      products = await getAllProductService()
+    }
     if (products) {
       res.json(products)
     }
   } catch (error) {
-      console.log(error)
+    console.log(error)
   }
 }
 
