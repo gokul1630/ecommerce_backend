@@ -16,6 +16,5 @@ app.use('/cart', cartRoute)
 app.use('/user', userRoute)
 
 app.listen(port, async () => {
-  await connect()
-  console.log(`server listening on http://localhost:${port}`)
+  await connect(port)
 })
