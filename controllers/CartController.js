@@ -1,6 +1,8 @@
 const {
   getAllItemsService,
   addNewItemService,
+  updateCartItemService,
+  deleteCartItemService,
 } = require('../services/CartServices')
 const { addCartItemsToUser } = require('../services/UserServices')
 
@@ -49,10 +51,31 @@ const addNewItemtoCart = async (req, res) => {
   }
 }
 
+const updateCartItem = async (req, res) => {
+  try {
+    const cartItem = await updateCartItemService(req.body)
+    if (cartItem) {
+      res.json(cartItem)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteCartItem = async (req, res) => {
+  try {
+    const cartItem = await deleteCartItemService(req.body._id)
+    if (cartItem) {
+      res.send('Item Deleted')
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 
 module.exports = {
   getItems,
   addNewItem,
+  updateCartItem,
+  deleteCartItem,
 }

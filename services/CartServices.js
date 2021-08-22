@@ -8,3 +8,11 @@ exports.getAllItemsService = async function (userId) {
 exports.addNewItemService = async function (data) {
   return await CartModel.create(data)
 }
+
+exports.updateCartItemService = async function (data) {
+  return await CartModel.findByIdAndUpdate(data._id, { ...data }, { new: true })
+}
+
+exports.deleteCartItemService = async function (id) {
+  return await CartModel.findByIdAndDelete(id)
+}
