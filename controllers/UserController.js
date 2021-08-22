@@ -7,7 +7,6 @@ const {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body
-
   if (!(email && password)) {
     res.status(403).send({
       message: 'Please provide All Required Fields',
@@ -21,7 +20,7 @@ const loginUser = async (req, res) => {
         res.status(403).send({ message: "Password doesn't match" })
       } else {
         let token = await user.getToken()
-        res.status(200).json({ token: token, user: data })
+        res.status(200).json({ token: token, user: user })
       }
     } else {
       res.status(403).send({ message: "Email isn't registred yet" })
@@ -60,12 +59,11 @@ const signUpUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { user, email, password } = req.body
   const userId = req.user._id
-  if (!(user && email && password)) {
+  if (!(user || email || password)) {
     res.status(403).send({
       message: 'Please provide All Required Fields',
     })
-  }
-  if (checkEmail(email)) {
+  } else if (checkEmail(email)) {
     res.status(400).send({ message: 'Provide Valid Email' })
   } else if (checkPassword(password)) {
     res.status(400).send({
