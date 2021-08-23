@@ -1,6 +1,9 @@
+const { response } = require('express')
 const {
   getAllProductService,
   addNewProductService,
+  updateProductService,
+  deleteProductService,
 } = require('../services/ProductServices')
 
 const addProducts = async (req, res) => {
@@ -27,4 +30,22 @@ const getProducts = async (req, res) => {
   }
 }
 
-module.exports = { getProducts, addProducts }
+const updateProduct = async (req, res) => {
+  try {
+    const data = await updateProductService(req.body)
+    res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteProduct = async (req, res) => {
+  try {
+    const data = await deleteProductService(req.body)
+    res.json(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { getProducts, addProducts, updateProduct, deleteProduct }
