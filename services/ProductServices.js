@@ -13,6 +13,5 @@ exports.updateProductService = async function (data) {
 }
 
 exports.deleteProductService = async function (data) {
-  console.log(data._id)
   return await ProductModel.findByIdAndDelete(data._id)
 }
