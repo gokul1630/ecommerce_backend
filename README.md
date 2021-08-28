@@ -2,7 +2,7 @@
 
 ## Ecommerce App using MERN Stack
 
-## This is backend repo made with Express & Mongodb
+## This is backend repo made with Express & Mongodb, <a href='https://github.com/gokul1630/ecommerce' target='_blank'>click here</a> here for Frontend Repo
 
 # Running This Repo Locally
 
