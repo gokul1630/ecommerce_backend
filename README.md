@@ -2,6 +2,8 @@
 
 ## Ecommerce App using MERN Stack
 
+[![CodeFactor](https://www.codefactor.io/repository/github/gokul1630/ecommerce_backend/badge)](https://www.codefactor.io/repository/github/gokul1630/ecommerce_backend)
+
 ## This is backend repo made with Express & Mongodb, <a href='https://github.com/gokul1630/ecommerce' target='_blank'>click here</a> here for Frontend Repo
 
 # Running This Repo Locally
