@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const User = require('../models/UserModel')
 const { findUserService } = require('../services/UserServices')
 const auth = async (req, res, next) => {
   let token
@@ -22,7 +21,7 @@ const auth = async (req, res, next) => {
 
     next()
   } catch (error) {
-    return res.status(403).send(error)
+    console.log(error)
   }
 }
 module.exports = auth
