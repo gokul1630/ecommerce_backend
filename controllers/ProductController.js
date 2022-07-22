@@ -8,8 +8,13 @@ const {
 
 const addProducts = async (req, res) => {
   try {
-    const products = await addNewProductService({ ...req.body })
-    res.json(products)
+    const owner = req.owner
+    if (owner) {
+      const products = await addNewProductService({ ...req.body })
+      res.json(products)
+    } else {
+      res.status(405).send({ message: "You aren't Authorised" })
+    }
   } catch (error) {
     console.log(error)
   }
@@ -32,8 +37,13 @@ const getProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const data = await updateProductService(req.body)
-    res.json(data)
+    const owner = req.owner
+    if (owner) {
+      const products = await updateProductService(req.body)
+      res.json(products)
+    } else {
+      res.status(405).send({ message: "You aren't Authorised" })
+    }
   } catch (error) {
     console.log(error)
   }
@@ -50,11 +60,11 @@ const deleteProduct = async (req, res) => {
 
 const getProductByCategory = async (req, res) => {
   try {
-    const { categoryId } = req.body
+    const { categoryId } = req.params
     const data = await getProductsByCategoryService(categoryId)
     res.json(data)
   } catch (error) {
-    res.send()
+    res.status(400).send({ message: 'Invalid Category' })
   }
 }
 
