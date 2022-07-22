@@ -3,6 +3,7 @@ const {
   addNewProductService,
   updateProductService,
   deleteProductService,
+  getProductsByCategoryService,
 } = require('../services/ProductServices')
 
 const addProducts = async (req, res) => {
@@ -47,4 +48,20 @@ const deleteProduct = async (req, res) => {
   }
 }
 
-module.exports = { getProducts, addProducts, updateProduct, deleteProduct }
+const getProductByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.body
+    const data = await getProductsByCategoryService(categoryId)
+    res.json(data)
+  } catch (error) {
+    res.send()
+  }
+}
+
+module.exports = {
+  getProducts,
+  addProducts,
+  updateProduct,
+  deleteProduct,
+  getProductByCategory,
+}
