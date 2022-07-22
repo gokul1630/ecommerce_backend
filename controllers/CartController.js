@@ -22,10 +22,11 @@ const getItems = async (req, res) => {
 
 const addNewItem = async (req, res) => {
   try {
-    const product = await getAllItemsService(req.user._id)
-    if (Object.keys(product.cartList).length !== 0) {
-      product.cartList.forEach(async (item) => {
-        if (item._id.toString() === req.body._id) {
+    const { _id } = req.body
+    const product = await getAllItemsService(_id)
+    if (product.length) {
+      product.forEach((item) => {
+        if (item._id.toString() === _id) {
           res.status(409).send({ message: 'Item Already Added To Cart' })
         } else {
           addNewItemtoCart(req, res)
@@ -41,9 +42,13 @@ const addNewItem = async (req, res) => {
 
 const addNewItemtoCart = async (req, res) => {
   try {
-    const cartItem = await addNewItemService({ ...req.body })
-    const cart = await addCartItems(req.user._id, cartItem._id)
-    if (cart && cartItem) {
+    const { _id } = req.user
+    const data = {
+      ...req.body,
+      userId: _id,
+    }
+    const cartItem = await addCartItemService(data)
+    if (cartItem) {
       res.json(cartItem)
     }
   } catch (error) {
