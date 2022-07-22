@@ -4,7 +4,6 @@ const {
   updateCartItemService,
   deleteCartItemService,
 } = require('../services/CartServices')
-const { addCartItems } = require('../services/CartServices')
 
 const getItems = async (req, res) => {
   const { _id } = req.user
@@ -16,7 +15,7 @@ const getItems = async (req, res) => {
       res.status(404).send({ message: 'Cart is Empty' })
     }
   } catch (error) {
-    res.status(403).send(error.message)
+    res.status(500).send(error)
   }
 }
 
@@ -36,7 +35,7 @@ const addNewItem = async (req, res) => {
       addNewItemtoCart(req, res)
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -52,7 +51,7 @@ const addNewItemtoCart = async (req, res) => {
       res.json(cartItem)
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -63,7 +62,7 @@ const updateCartItem = async (req, res) => {
       res.json(cartItem)
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -74,7 +73,7 @@ const deleteCartItem = async (req, res) => {
       res.send('Item Deleted')
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 

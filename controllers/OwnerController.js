@@ -26,7 +26,7 @@ const loginOwner = async (req, res) => {
       res.status(403).send({ message: "Email isn't registred yet" })
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -60,7 +60,7 @@ const signUpOwner = async (req, res) => {
       res.json({ token, owner: data })
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -86,7 +86,7 @@ const updateOwner = async (req, res) => {
     }
     let userData = await updateOwnerService(ownerId, data)
     let token = await userData.getToken()
-    res.json({ token: token, owner: userData })
+    res.json({ token, owner: userData })
   }
 }
 

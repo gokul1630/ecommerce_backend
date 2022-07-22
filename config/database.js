@@ -10,7 +10,7 @@ module.exports = connect = async (port) => {
 
   database.once('open', () => {
     console.log('Database Connected')
-    console.log(`Server Listening on http://${database.host}:${port}`)
+    console.log(`Server Listening on http://localhost:${port}/api/v1`)
   })
 
   database.on('error', console.error.bind(console, 'Error'))

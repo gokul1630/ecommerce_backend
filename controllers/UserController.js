@@ -20,13 +20,13 @@ const loginUser = async (req, res) => {
         res.status(403).send({ message: "Password doesn't match" })
       } else {
         let token = await user.getToken()
-        res.status(200).json({ token: token, user: user })
+        res.status(200).json({ token, user: user })
       }
     } else {
       res.status(403).send({ message: "Email isn't registred yet" })
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -56,10 +56,10 @@ const signUpUser = async (req, res) => {
         password: encryptedPassword,
       })
       let token = await data.getToken()
-      res.json({ token: token, user: data })
+      res.json({ token, user: data })
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -85,7 +85,7 @@ const updateUser = async (req, res) => {
     }
     let userData = await updateUserService(userId, data)
     let token = await userData.getToken()
-    res.json({ token: token, user: userData })
+    res.json({ token, user: userData })
   }
 }
 

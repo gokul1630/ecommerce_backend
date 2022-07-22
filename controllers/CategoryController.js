@@ -20,7 +20,7 @@ const getCategoryByIdController = async (req, res) => {
     const data = await getCategoryService(categoryId)
     res.json(data)
   } catch (error) {
-    res.status(500).send({ message: error })
+    res.status(500).send(error)
   }
 }
 
@@ -30,7 +30,7 @@ const addCategoryController = async (req, res) => {
     const data = await addCategoryService({ category, image })
     res.json(data)
   } catch (error) {
-    res.status(400).send({ message: error })
+    res.status(500).send(error)
   }
 }
 
@@ -40,7 +40,7 @@ const deleteCategoryController = async (req, res) => {
     const data = await deleteCategoryService(categoryId)
     res.json(data)
   } catch (error) {
-    res.status(404).status({ error })
+    res.status(500).send(error)
   }
 }
 
@@ -48,7 +48,10 @@ const updateCategoryController = async (req, res) => {
   try {
     const { categoryId, image } = req.body
     const data = await updateCategoryService(categoryId, { image })
-  } catch (error) {}
+    res.json(data)
+  } catch (error) {
+    res.status(500).send(error)
+  }
 }
 
 module.exports = {

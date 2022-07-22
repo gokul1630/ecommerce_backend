@@ -16,7 +16,7 @@ const addProducts = async (req, res) => {
       res.status(405).send({ message: "You aren't Authorised" })
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 const getProducts = async (req, res) => {
@@ -31,7 +31,7 @@ const getProducts = async (req, res) => {
       res.json(products)
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -45,7 +45,7 @@ const updateProduct = async (req, res) => {
       res.status(405).send({ message: "You aren't Authorised" })
     }
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -54,7 +54,7 @@ const deleteProduct = async (req, res) => {
     const data = await deleteProductService(req.body)
     res.json(data)
   } catch (error) {
-    console.log(error)
+    res.status(500).send(error)
   }
 }
 
@@ -64,7 +64,7 @@ const getProductByCategory = async (req, res) => {
     const data = await getProductsByCategoryService(categoryId)
     res.json(data)
   } catch (error) {
-    res.status(400).send({ message: 'Invalid Category' })
+    res.status(500).send(error)
   }
 }
 
