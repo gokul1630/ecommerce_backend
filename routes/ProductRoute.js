@@ -5,13 +5,13 @@ const {
   getProducts,
   updateProduct,
   deleteProduct,
-  getProductByCategory
+  getProductByCategory,
 } = require('../controllers/ProductController')
 
-router.get('/getProducts', auth, getProducts)
-router.post('/getProductsByCategory', auth, getProductByCategory)
-router.put('/addProducts', auth, addProducts)
-router.patch('/updateProduct', auth, updateProduct)
-router.delete('/deleteProduct', auth, deleteProduct)
+router.post('/update', auth, updateProduct)
+router.get('/', auth, getProducts)
+router.get('/:categoryId', auth, getProductByCategory)
+router.put('/add', auth, addProducts)
+router.delete('/remove', auth, deleteProduct)
 
 module.exports = router

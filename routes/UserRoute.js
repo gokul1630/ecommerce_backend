@@ -6,8 +6,8 @@ const {
   updateUser,
 } = require('../controllers/UserController')
 
-router.post('/loginUser', loginUser)
-router.put('/signUpUser', signUpUser)
-router.patch('/updateUser', auth, updateUser)
+router.post('/login', loginUser)
+router.put('/signup', signUpUser)
+router.post('/update', auth, updateUser)
 
 module.exports = router

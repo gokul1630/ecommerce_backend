@@ -8,6 +8,6 @@ const {
 
 router.post('/login', loginOwner)
 router.put('/signup', signUpOwner)
-router.patch('/update', auth, updateOwner)
+router.post('/update', auth, updateOwner)
 
 module.exports = router

@@ -14,7 +14,7 @@ const getCategoryController = async (_, res) => {
   }
 }
 
-const getCategoryControllerById = async (req, res) => {
+const getCategoryByIdController = async (req, res) => {
   try {
     const { categoryId } = req.body
     const data = await getCategoryService(categoryId)
@@ -53,7 +53,7 @@ const updateCategoryController = async (req, res) => {
 
 module.exports = {
   getCategoryController,
-  getCategoryControllerById,
+  getCategoryByIdController,
   addCategoryController,
   updateCategoryController,
   deleteCategoryController,
