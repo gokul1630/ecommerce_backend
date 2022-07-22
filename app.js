@@ -11,9 +11,9 @@ app.use(cors())
 app.use(express.json())
 const port = process.env.PORT || 1234
 
-app.use('/product', productRoute)
-app.use('/cart', cartRoute)
-app.use('/user', userRoute)
+app.use('/api/v1/product', productRoute)
+app.use('/api/v1/cart', cartRoute)
+app.use('/api/v1/user', userRoute)
 
 app.listen(port, async () => {
   await connect(port)
