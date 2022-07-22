@@ -17,5 +17,5 @@ exports.deleteProductService = async (data) => {
 }
 
 exports.getProductsByCategoryService = async (categoryId) => {
-  return await ProductModel.findOne({ categoryId })
+  return await ProductModel.find({ categoryId })
 }
