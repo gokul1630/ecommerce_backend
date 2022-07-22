@@ -1,6 +1,6 @@
 const {
   getAllItemsService,
-  addNewItemService,
+  addCartItemService,
   updateCartItemService,
   deleteCartItemService,
 } = require('../services/CartServices')
