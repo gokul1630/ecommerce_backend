@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { findUserService } = require('../services/UserServices')
+const { findOwnerService } = require('../services/OwnerService')
+
 const auth = async (req, res, next) => {
   const { authorization } = req.headers
   let token
@@ -18,6 +20,15 @@ const auth = async (req, res, next) => {
     req.user = users
 
     next()
+    }
+    if (ownerId) {
+      let owner = await findOwnerService(ownerId)
+      if (!owner) {
+        return res.status(403).send({ message: "This email isn't registred" })
+      }
+      req.owner = owner
+      next()
+    }
   } catch (error) {
     console.log(error)
   }
