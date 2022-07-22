@@ -8,9 +8,10 @@ const {
   deleteCategoryController,
 } = require('../controllers/CategoryController')
 
-router.post('/getCategory', auth, getCategoryController)
+router.get('/getCategory', auth, getCategoryController)
 router.post('/getCategoryById', auth, getCategoryControllerById)
-router.post('/addCategory', auth, addCategoryController)
-router.post('/addCategory', auth, addCategoryController)
+router.put('/addCategory', auth, addCategoryController)
 router.post('/updateCategory', auth, updateCategoryController)
-router.post('/deleteCategory', auth, deleteCategoryController)
+router.delete('/deleteCategory', auth, deleteCategoryController)
+
+module.exports = router
