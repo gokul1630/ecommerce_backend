@@ -1,8 +1,7 @@
 const CartModel = require('../models/CartModel')
-const UserModel = require('../models/UserModel')
 
-exports.getAllItemsService = async  (userId) =>{
-  return await UserModel.findById(userId).lean().populate('cartList').exec()
+exports.getAllItemsService = async (cartId) => {
+  return await CartModel.find({ _id: cartId })
 }
 
 exports.addNewItemService = async  (data) =>{
@@ -15,10 +14,4 @@ exports.updateCartItemService = async  (data)=> {
 
 exports.deleteCartItemService = async  (id)=> {
   return await CartModel.findByIdAndDelete(id)
-}
-
-exports.addCartItems = async  (userId, cartId)=> {
-  return await CartModel.findByIdAndUpdate(cartId, {
-    $addToSet: { userId },
-  })
 }
