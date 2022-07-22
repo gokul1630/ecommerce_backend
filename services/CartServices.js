@@ -1,19 +1,19 @@
 const CartModel = require('../models/CartModel')
 const UserModel = require('../models/UserModel')
 
-exports.getAllItemsService = async function (userId) {
+exports.getAllItemsService = async  (userId) =>{
   return await UserModel.findById(userId).lean().populate('cartList').exec()
 }
 
-exports.addNewItemService = async function (data) {
+exports.addNewItemService = async  (data) =>{
   return await CartModel.create(data)
 }
 
-exports.updateCartItemService = async function (data) {
+exports.updateCartItemService = async  (data)=> {
   return await CartModel.findByIdAndUpdate(data._id, { ...data }, { new: true })
 }
 
-exports.deleteCartItemService = async function (id) {
+exports.deleteCartItemService = async  (id)=> {
   return await CartModel.findByIdAndDelete(id)
 }
 

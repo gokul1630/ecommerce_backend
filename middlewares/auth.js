@@ -1,12 +1,10 @@
 const jwt = require('jsonwebtoken')
 const { findUserService } = require('../services/UserServices')
 const auth = async (req, res, next) => {
+  const { authorization } = req.headers
   let token
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1]
+  if (authorization && authorization.startsWith('Bearer')) {
+    token = authorization.split(' ')[1]
   }
   if (!token) {
     return res.status(403).send({ message: 'Auth Token missing' })
