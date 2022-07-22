@@ -4,7 +4,7 @@ const {
   updateCartItemService,
   deleteCartItemService,
 } = require('../services/CartServices')
-const { addCartItemsToUser } = require('../services/UserServices')
+const { addCartItems } = require('../services/CartServices')
 
 const getItems = async (req, res) => {
   const { _id } = req.user
@@ -42,7 +42,7 @@ const addNewItem = async (req, res) => {
 const addNewItemtoCart = async (req, res) => {
   try {
     const cartItem = await addNewItemService({ ...req.body })
-    const cart = await addCartItemsToUser(req.user._id, cartItem._id)
+    const cart = await addCartItems(req.user._id, cartItem._id)
     if (cart && cartItem) {
       res.json(cartItem)
     }

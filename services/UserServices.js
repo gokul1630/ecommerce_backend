@@ -12,11 +12,6 @@ exports.signUpService = async function (user, email, password) {
   return await User.create({ user, email, password })
 }
 
-exports.addCartItemsToUser = async function (userId, itemId) {
-  return await User.findByIdAndUpdate(userId, {
-    $addToSet: { cartList: itemId },
-  })
-}
 exports.updateUserService = async (id, data) => {
   return await User.findByIdAndUpdate(id, data, { new: true })
 }

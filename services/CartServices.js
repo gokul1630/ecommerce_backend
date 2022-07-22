@@ -16,3 +16,9 @@ exports.updateCartItemService = async function (data) {
 exports.deleteCartItemService = async function (id) {
   return await CartModel.findByIdAndDelete(id)
 }
+
+exports.addCartItems = async  (userId, cartId)=> {
+  return await CartModel.findByIdAndUpdate(cartId, {
+    $addToSet: { userId },
+  })
+}
