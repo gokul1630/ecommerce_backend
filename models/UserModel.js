@@ -6,10 +6,18 @@ const UserSchema = mongoose.Schema({
   user: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
+  phoneNumber: { type: String },
+  dob: { type: String },
+  address: { type: String },
+  image: {
+    type: String,
+    default:
+      'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg',
+  },
 })
 
 UserSchema.methods.getToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.EXPIRES_IN,
   })
 }

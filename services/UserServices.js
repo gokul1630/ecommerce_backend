@@ -8,8 +8,8 @@ exports.signInService = async (email) => {
   return await User.findOne({ email })
 }
 
-exports.signUpService = async (user, email, password) => {
-  return await User.create({ user, email, password })
+exports.signUpService = async (data) => {
+  return await User.create(data)
 }
 
 exports.updateUserService = async (id, data) => {

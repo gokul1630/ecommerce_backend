@@ -31,14 +31,13 @@ const loginUser = async (req, res) => {
 }
 
 const signUpUser = async (req, res) => {
-  const { user, email, password } = req.body
-  if (!(user && email && password)) {
-    res.status(403).send({
-      message: 'Please provide All Required Fields',
-    })
-  }
   try {
-    if (checkEmail(email)) {
+    const { user, email, password, dob, image, address, phoneNumber } = req.body
+    if (!(user && email && password)) {
+      res.status(403).send({
+        message: 'Please provide All Required Fields',
+      })
+    } else if (checkEmail(email)) {
       res.status(400).send({ message: 'Provide Valid Email' })
     } else if (checkPassword(password)) {
       res.status(400).send({
@@ -47,7 +46,15 @@ const signUpUser = async (req, res) => {
       })
     } else {
       let encryptedPassword = await bcrypt.hash(password, 10)
-      let data = await signUpService(user, email, encryptedPassword)
+      let data = await signUpService({
+        user,
+        email,
+        dob,
+        image,
+        address,
+        phoneNumber,
+        password: encryptedPassword,
+      })
       let token = await data.getToken()
       res.json({ token: token, user: data })
     }
@@ -73,8 +80,7 @@ const updateUser = async (req, res) => {
   } else {
     let encryptedPassword = await bcrypt.hash(password, 10)
     let data = {
-      user: user,
-      email: email,
+      ...req.body,
       password: encryptedPassword,
     }
     let userData = await updateUserService(userId, data)
