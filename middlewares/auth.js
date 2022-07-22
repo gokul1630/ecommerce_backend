@@ -8,18 +8,21 @@ const auth = async (req, res, next) => {
   if (authorization && authorization.startsWith('Bearer')) {
     token = authorization.split(' ')[1]
   }
-  if (!token) {
-    return res.status(403).send({ message: 'Auth Token missing' })
-  }
-  try {
-    let decoded = jwt.verify(token, process.env.JWT_SECRET)
-    let users = await findUserService(decoded.id)
-    if (!users) {
-      return res.status(403).send({ message: 'No users Found' })
-    }
-    req.user = users
+  if (!token) return res.status(403).send({ message: 'Auth Token missing' })
 
-    next()
+  try {
+    let { userId, ownerId } = jwt.verify(token, process.env.JWT_SECRET)
+    if (!userId && !ownerId) {
+      res.status(401).send({ message: 'Invalid Token' })
+    }
+    if (userId) {
+      let user = await findUserService(userId)
+      if (!user) {
+        return res.status(403).send({ message: "This email isn't registred" })
+      }
+
+      req.user = user
+      next()
     }
     if (ownerId) {
       let owner = await findOwnerService(ownerId)
