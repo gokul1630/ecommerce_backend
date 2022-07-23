@@ -5,19 +5,15 @@ const {
   getCategoryService,
 } = require('../services/CategoryService')
 
-const getCategoryController = async (_, res) => {
+const getCategoryController = async (req, res) => {
   try {
-    const data = await getCategoryService()
-    res.json(data)
-  } catch (error) {
-    res.status(500).send({ message: error })
-  }
-}
-
-const getCategoryByIdController = async (req, res) => {
-  try {
-    const { categoryId } = req.body
-    const data = await getCategoryService(categoryId)
+    let data
+    const { categoryId } = req.params
+    if (categoryId) {
+     data = await getCategoryService(categoryId)
+    } else {
+      data = await getCategoryService()
+    }
     res.json(data)
   } catch (error) {
     res.status(500).send(error)
@@ -56,7 +52,6 @@ const updateCategoryController = async (req, res) => {
 
 module.exports = {
   getCategoryController,
-  getCategoryByIdController,
   addCategoryController,
   updateCategoryController,
   deleteCategoryController,
