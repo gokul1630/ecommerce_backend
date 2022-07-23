@@ -1,4 +1,3 @@
-const { findByIdAndUpdate } = require('../models/CategoriesModel')
 const Category = require('../models/CategoriesModel')
 
 exports.getCategoryService = async (categoryId) => {
