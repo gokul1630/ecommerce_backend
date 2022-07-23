@@ -59,3 +59,4 @@ npm install && npm start
 - pagination
 - passport authentication
 - rebase whole code to oops pattern with Typescript
+- improve code quality
