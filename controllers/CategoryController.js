@@ -1,4 +1,9 @@
 const {
+  CATEGORY_NOT_FOUND,
+  CATEGORY_DELETED,
+  NOT_AUTHORISED,
+} = require('../constants/constants')
+const {
   addCategoryService,
   deleteCategoryService,
   updateCategoryService,
@@ -23,8 +28,13 @@ const getCategoryController = async (req, res) => {
 const addCategoryController = async (req, res) => {
   try {
     const { category, image } = req.body
-    const data = await addCategoryService({ category, image })
-    res.json(data)
+    const owner = req.owner
+    if (owner) {
+      const data = await addCategoryService({ category, image })
+      res.json(data)
+    } else {
+      res.status(400).send({ message: NOT_AUTHORISED })
+    }
   } catch (error) {
     res.status(500).send(error)
   }
@@ -32,9 +42,18 @@ const addCategoryController = async (req, res) => {
 
 const deleteCategoryController = async (req, res) => {
   try {
-    const { categoryId } = req.body
-    const data = await deleteCategoryService(categoryId)
-    res.json(data)
+    const { _id } = req.body
+    const owner = req.owner
+    if (owner) {
+      const data = await deleteCategoryService(_id)
+      if (data) {
+        res.send({ message: CATEGORY_DELETED })
+      } else {
+        res.status(404).send({ message: CATEGORY_NOT_FOUND })
+      }
+    } else {
+      res.status(400).send({ message: NOT_AUTHORISED })
+    }
   } catch (error) {
     res.status(500).send(error)
   }
@@ -42,9 +61,14 @@ const deleteCategoryController = async (req, res) => {
 
 const updateCategoryController = async (req, res) => {
   try {
-    const { categoryId, image } = req.body
-    const data = await updateCategoryService(categoryId, { image })
-    res.json(data)
+    const { _id, category, image } = req.body
+    const owner = req.owner
+    if (owner) {
+      const data = await updateCategoryService(_id, { image, category })
+      res.json(data)
+    } else {
+      res.status(400).send({ message: NOT_AUTHORISED })
+    }
   } catch (error) {
     res.status(500).send(error)
   }

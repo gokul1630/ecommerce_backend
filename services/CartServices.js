@@ -1,7 +1,7 @@
 const CartModel = require('../models/CartModel')
 
 exports.getAllItemsService = async (cartId) => {
-  return await CartModel.find({ _id: cartId })
+  return await CartModel.find({ userId: cartId })
 }
 
 exports.addCartItemService = async (data) => {

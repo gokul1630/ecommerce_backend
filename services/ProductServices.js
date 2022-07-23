@@ -5,15 +5,16 @@ exports.addNewProductService = async (data) => {
 }
 
 exports.getAllProductService = async (id) => {
-  return await ProductModel.find(id)
+  if (id) return await ProductModel.findById(id)
+  return await ProductModel.find()
 }
 
-exports.updateProductService = async (data) => {
-  return await ProductModel.findByIdAndUpdate(data._id, data, { new: true })
+exports.updateProductService = async (productId,data) => {
+  return await ProductModel.findByIdAndUpdate(productId, data, { new: true })
 }
 
-exports.deleteProductService = async (data) => {
-  return await ProductModel.findByIdAndDelete(data._id)
+exports.deleteProductService = async (productId) => {
+  return await ProductModel.findByIdAndDelete(productId)
 }
 
 exports.getProductsByCategoryService = async (categoryId) => {

@@ -8,7 +8,7 @@ const {
 } = require('../controllers/CartController')
 
 router.get('/', auth, getItems)
-router.post('/add', auth, addNewItem)
+router.put('/add', auth, addNewItem)
 router.post('/update', auth, updateCartItem)
 router.delete('/remove', auth, deleteCartItem)
 

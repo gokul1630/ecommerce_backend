@@ -1,4 +1,8 @@
-const { NOT_AUTHORISED } = require('../constants/constants')
+const {
+  NOT_AUTHORISED,
+  PRODUCT_DELETED,
+  PRODUCT_NOT_FOUND,
+} = require('../constants/constants')
 const {
   getAllProductService,
   addNewProductService,
@@ -23,13 +27,16 @@ const addProducts = async (req, res) => {
 const getProducts = async (req, res) => {
   let products
   try {
-    if (Object.keys(req.query).length !== 0) {
-      products = await getAllProductService({ ...req.query })
+    const { productId } = req.params
+    if (productId) {
+      products = await getAllProductService(productId)
     } else {
       products = await getAllProductService()
     }
     if (products) {
       res.json(products)
+    } else {
+      res.status(404).send({ message: PRODUCT_NOT_FOUND })
     }
   } catch (error) {
     res.status(500).send(error)
@@ -39,8 +46,9 @@ const getProducts = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const owner = req.owner
+    const { _id } = req.body
     if (owner) {
-      const products = await updateProductService(req.body)
+      const products = await updateProductService(_id, req.body)
       res.json(products)
     } else {
       res.status(405).send({ message: NOT_AUTHORISED })
@@ -52,8 +60,18 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const data = await deleteProductService(req.body)
-    res.json(data)
+    const owner = req.owner
+    const { _id } = req.body
+    if (owner) {
+      const data = await deleteProductService(_id)
+      if (data) {
+        res.json({ message: PRODUCT_DELETED })
+      } else {
+        res.status(404).send({ message: PRODUCT_NOT_FOUND })
+      }
+    } else {
+      res.status(405).send({ message: NOT_AUTHORISED })
+    }
   } catch (error) {
     res.status(500).send(error)
   }

@@ -8,9 +8,9 @@ const {
   getProductByCategory,
 } = require('../controllers/ProductController')
 
+router.get('/:productId?', getProducts)
 router.post('/update', auth, updateProduct)
-router.get('/', getProducts)
-router.get('/:categoryId', auth, getProductByCategory)
+router.get('/:categoryId', getProductByCategory)
 router.put('/add', auth, addProducts)
 router.delete('/remove', auth, deleteProduct)
 

@@ -3,7 +3,7 @@ const Category = require('../models/CategoriesModel')
 
 exports.getCategoryService = async (categoryId) => {
   if (categoryId) return await Category.findById(categoryId)
-  Category.find()
+  return await Category.find()
 }
 
 exports.addCategoryService = async (category) => {
@@ -11,7 +11,7 @@ exports.addCategoryService = async (category) => {
 }
 
 exports.updateCategoryService = async (categoryId, data) => {
-  return await Category, findByIdAndUpdate(categoryId, data, { new: true })
+  return await Category.findByIdAndUpdate(categoryId, data, { new: true })
 }
 
 exports.deleteCategoryService = async (categoryId) => {

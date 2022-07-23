@@ -2,6 +2,7 @@ const {
   CART_IS_EMPTY,
   ITEM_ALREDY_IN_CART,
   ITEM_DELETED,
+  ITEM_NOT_FOUND,
 } = require('../constants/constants')
 const {
   getAllItemsService,
@@ -15,7 +16,7 @@ const getItems = async (req, res) => {
   try {
     const cartItems = await getAllItemsService(_id)
     if (cartItems) {
-      res.json(cartItems.cartList)
+      res.json(cartItems)
     } else {
       res.status(404).send({ message: CART_IS_EMPTY })
     }
@@ -76,6 +77,8 @@ const deleteCartItem = async (req, res) => {
     const cartItem = await deleteCartItemService(req.body._id)
     if (cartItem) {
       res.send({ message: ITEM_DELETED })
+    } else {
+      res.status(404).send({ message: ITEM_NOT_FOUND })
     }
   } catch (error) {
     res.status(500).send(error)
