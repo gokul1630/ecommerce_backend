@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { DEFAULT_USER_AVATAR } = require('../constants/constants')
 
 const productSchema = mongoose.Schema({
   brand: { type: String },
@@ -10,6 +11,9 @@ const productSchema = mongoose.Schema({
   categoryId: { type: mongoose.Types.ObjectId, ref: 'Category' },
   ratings: { type: String },
   images: [{ type: String }],
+  seller: { type: String },
+  sellerImage: { type: String, default: DEFAULT_USER_AVATAR },
+  sellerStoreLink: { type: String },
 })
 
 module.exports = mongoose.model('Products', productSchema)

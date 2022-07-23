@@ -1,3 +1,4 @@
+const { NOT_AUTHORISED } = require('../constants/constants')
 const {
   getAllProductService,
   addNewProductService,
@@ -13,7 +14,7 @@ const addProducts = async (req, res) => {
       const products = await addNewProductService({ ...req.body })
       res.json(products)
     } else {
-      res.status(405).send({ message: "You aren't Authorised" })
+      res.status(405).send({ message: NOT_AUTHORISED })
     }
   } catch (error) {
     res.status(500).send(error)
@@ -42,7 +43,7 @@ const updateProduct = async (req, res) => {
       const products = await updateProductService(req.body)
       res.json(products)
     } else {
-      res.status(405).send({ message: "You aren't Authorised" })
+      res.status(405).send({ message: NOT_AUTHORISED })
     }
   } catch (error) {
     res.status(500).send(error)

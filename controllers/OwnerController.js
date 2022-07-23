@@ -1,5 +1,14 @@
 const bcrypt = require('bcrypt')
 const {
+  INVALID_PASSWORD_WARNING,
+  INVALID_EMAIL_WARNING,
+  EMAIL_NOT_REGISTRED,
+  ALL_REQUIRED_FIELDS_WARNING,
+  PASSWORD_NOT_MATCHED,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+} = require('../constants/constants')
+const {
   signUpService,
   signInService,
   updateOwnerService,
@@ -9,7 +18,7 @@ const loginOwner = async (req, res) => {
   const { email, password } = req.body
   if (!(email && password)) {
     res.status(403).send({
-      message: 'Please provide All Required Fields',
+      message: ALL_REQUIRED_FIELDS_WARNING,
     })
   }
   try {
@@ -17,13 +26,13 @@ const loginOwner = async (req, res) => {
     if (owner) {
       const passwordMatch = await owner.checkPassword(password)
       if (!passwordMatch) {
-        res.status(403).send({ message: "Password doesn't match" })
+        res.status(403).send({ message: PASSWORD_NOT_MATCHED })
       } else {
         let token = await owner.getToken()
         res.status(200).json({ token, owner })
       }
     } else {
-      res.status(403).send({ message: "Email isn't registred yet" })
+      res.status(403).send({ message: EMAIL_NOT_REGISTRED })
     }
   } catch (error) {
     res.status(500).send(error)
@@ -36,14 +45,13 @@ const signUpOwner = async (req, res) => {
       req.body
     if (!(owner && email && password)) {
       res.status(403).send({
-        message: 'Please provide All Required Fields',
+        message: ALL_REQUIRED_FIELDS_WARNING,
       })
     } else if (checkEmail(email)) {
-      res.status(400).send({ message: 'Provide Valid Email' })
+      res.status(400).send({ message: INVALID_EMAIL_WARNING })
     } else if (checkPassword(password)) {
       res.status(400).send({
-        message:
-          'Password must be Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character',
+        message: INVALID_PASSWORD_WARNING,
       })
     } else {
       let encryptedPassword = await bcrypt.hash(password, 10)
@@ -69,14 +77,13 @@ const updateOwner = async (req, res) => {
   const ownerId = req.owner._id
   if (!(owner || email || password)) {
     res.status(403).send({
-      message: 'Please provide All Required Fields',
+      message: ALL_REQUIRED_FIELDS_WARNING,
     })
   } else if (checkEmail(email)) {
-    res.status(400).send({ message: 'Provide Valid Email' })
+    res.status(400).send({ message: INVALID_EMAIL_WARNING })
   } else if (checkPassword(password)) {
     res.status(400).send({
-      message:
-        'Password must be Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character',
+      message: INVALID_PASSWORD_WARNING,
     })
   } else {
     let encryptedPassword = await bcrypt.hash(password, 10)
@@ -91,14 +98,11 @@ const updateOwner = async (req, res) => {
 }
 
 const checkEmail = (email) => {
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  const emailTest = emailRegex.test(String(email).toLowerCase())
+  const emailTest = EMAIL_REGEX.test(String(email).toLowerCase())
   return !emailTest
 }
 const checkPassword = (password) => {
-  const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/
-  const passwordTest = passwordRegex.test(password)
+  const passwordTest = PASSWORD_REGEX.test(password)
   return !passwordTest
 }
 

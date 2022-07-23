@@ -1,4 +1,9 @@
 const {
+  CART_IS_EMPTY,
+  ITEM_ALREDY_IN_CART,
+  ITEM_DELETED,
+} = require('../constants/constants')
+const {
   getAllItemsService,
   addCartItemService,
   updateCartItemService,
@@ -12,7 +17,7 @@ const getItems = async (req, res) => {
     if (cartItems) {
       res.json(cartItems.cartList)
     } else {
-      res.status(404).send({ message: 'Cart is Empty' })
+      res.status(404).send({ message: CART_IS_EMPTY })
     }
   } catch (error) {
     res.status(500).send(error)
@@ -26,7 +31,7 @@ const addNewItem = async (req, res) => {
     if (product.length) {
       product.forEach((item) => {
         if (item._id.toString() === _id) {
-          res.status(409).send({ message: 'Item Already Added To Cart' })
+          res.status(409).send({ message: ITEM_ALREDY_IN_CART })
         } else {
           addNewItemtoCart(req, res)
         }
@@ -70,7 +75,7 @@ const deleteCartItem = async (req, res) => {
   try {
     const cartItem = await deleteCartItemService(req.body._id)
     if (cartItem) {
-      res.send('Item Deleted')
+      res.send({ message: ITEM_DELETED })
     }
   } catch (error) {
     res.status(500).send(error)
