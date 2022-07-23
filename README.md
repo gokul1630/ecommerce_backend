@@ -2,9 +2,10 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/gokul1630/ecommerce_backend/badge)](https://www.codefactor.io/repository/github/gokul1630/ecommerce_backend)
 
-# Running This Repo Locally
+# Run This Repo Locally
 
 ### You need to create a .env file with below contents in root of the project
+#### look `.env.sample` for More details
 
 ```
 JWT_SECRET= <your secret key>
@@ -24,6 +25,15 @@ require('crypto').randomBytes(64).toString('hex')
 ```
 npm install && npm start
 ```
+
+# Features
+- Products listing
+- Fetch Products by Categories
+- Cart Functionality
+- Used jsonwebtoken for Authentication
+- Separate Login/SignUp for Users and Owners
+- Password is Encrypted with Bcrypt
+- more features on the way...
 
 # Documentation for Available Routes
 
@@ -47,3 +57,5 @@ npm install && npm start
 
 - rate limiter
 - pagination
+- passport authentication
+- rebase whole code to oops pattern with Typescript
